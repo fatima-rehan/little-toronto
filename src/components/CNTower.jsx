@@ -1,0 +1,16 @@
+export default function CNTower({ size = 40 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="48" fill="#C0392B" />
+      <rect x="47" y="8" width="6" height="82" rx="1.5" fill="#FFD54F" />
+      <rect x="49" y="4" width="2" height="8" rx="1" fill="#FFD54F" />
+      <ellipse cx="50" cy="52" rx="18" ry="7" fill="#FFD54F" />
+      <ellipse cx="50" cy="52" rx="14" ry="5" fill="#C0392B" />
+      <ellipse cx="50" cy="52" rx="9" ry="3" fill="#FFD54F" />
+      <ellipse cx="50" cy="38" rx="10" ry="4" fill="#FFD54F" />
+      <ellipse cx="50" cy="38" rx="7" ry="2.5" fill="#C0392B" />
+      <path d="M44 88 L50 62 L56 88 Z" fill="#FFD54F" />
+      <path d="M40 92 L50 70 L60 92 Z" fill="#FFD54F" opacity="0.6" />
+    </svg>
+  );
+}

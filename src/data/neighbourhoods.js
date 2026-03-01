@@ -1,0 +1,12 @@
+export const NEIGHBOURHOODS = [
+  { id: 'little-italy', name: 'Little Italy', lat: 43.6555, lng: -79.4203, color: '#2E8B57', flag: '🇮🇹', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: "Toronto's vibrant Italian quarter along College Street — trattorias, gelaterias, and cafe patios." },
+  { id: 'little-tokyo', name: 'Little Tokyo', lat: 43.6532, lng: -79.3832, color: '#C62828', flag: '🇯🇵', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: 'A growing Japanese cultural pocket with ramen shops, izakayas, and anime stores.' },
+  { id: 'chinatown', name: 'Chinatown', lat: 43.6529, lng: -79.3979, color: '#E65100', flag: '🇨🇳', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: "One of North America's largest Chinatowns — dim sum halls, herbal shops, and night markets." },
+  { id: 'greektown', name: 'Greektown', lat: 43.679, lng: -79.352, color: '#1565C0', flag: '🇬🇷', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: 'The Danforth — souvlaki, baklava, and the annual Taste of the Danforth festival.' },
+  { id: 'little-india', name: 'Little India', lat: 43.678, lng: -79.337, color: '#F9A825', flag: '🇮🇳', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: "Gerrard India Bazaar — saris, samosas, and Bollywood beats in Toronto's east end." },
+  { id: 'koreatown', name: 'Koreatown', lat: 43.664, lng: -79.417, color: '#6A1B9A', flag: '🇰🇷', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: "Bloor Street's Korean hub — BBQ joints, karaoke bars, and K-beauty shops." },
+  { id: 'little-portugal', name: 'Little Portugal', lat: 43.648, lng: -79.438, color: '#00695C', flag: '🇵🇹', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: "Dundas West's Portuguese community — pastéis de nata, sardines, and colourful murals." },
+  { id: 'little-jamaica', name: 'Little Jamaica', lat: 43.683, lng: -79.444, color: '#FF6F00', flag: '🇯🇲', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: "Eglinton West's Caribbean soul — jerk chicken, patties, reggae, and deep roots." },
+  { id: 'little-ethiopia', name: 'Little Ethiopia', lat: 43.6745, lng: -79.427, color: '#33691E', flag: '🇪🇹', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: 'Ethiopian restaurants along Danforth — injera, doro wat, and coffee ceremonies.' },
+  { id: 'roncesvalles', name: 'Roncesvalles', lat: 43.645, lng: -79.453, color: '#AD1457', flag: '🇵🇱', video: 'https://www.youtube.com/embed/yXGCKkjMhOg', desc: "Toronto's Polish village — pierogi, kielbasa, and old-world bakeries." },
+];
