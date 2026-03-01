@@ -31,7 +31,7 @@ export default function App() {
           </div>
 
           <div className="topbar">
-            <div className="tb-logo" onClick={() => setActive(null)}>
+            <div className="tb-logo" onClick={() => { setActive(null); setPhase('splash'); }}>
               <CNTower size={30} />
               <span>
                 Little <b>Toronto.</b>

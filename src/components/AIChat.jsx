@@ -8,29 +8,31 @@ const GEMINI_URL = (key) =>
 function localRecommend(query) {
   const ql = query.toLowerCase();
   const kw = {
+    kensington: ['kensington', 'market', 'vintage', 'bodega', 'start', 'streetcar'],
     'little-italy': ['italian', 'pasta', 'pizza', 'gelato', 'espresso', 'cafe', 'patio', 'wine'],
-    'little-tokyo': ['japanese', 'ramen', 'sushi', 'anime', 'japan', 'izakaya', 'matcha'],
-    chinatown: ['chinese', 'dim sum', 'dumpling', 'noodle', 'asian', 'bubble tea'],
-    greektown: ['greek', 'souvlaki', 'mediterranean', 'baklava', 'gyro'],
     'little-india': ['indian', 'curry', 'spicy', 'bollywood', 'samosa', 'biryani'],
-    koreatown: ['korean', 'bbq', 'karaoke', 'kpop', 'kimchi'],
+    'little-tokyo': ['japanese', 'ramen', 'sushi', 'anime', 'japan', 'izakaya', 'matcha'],
     'little-portugal': ['portuguese', 'pastry', 'nata', 'sardine', 'mural'],
+    'little-poland': ['polish', 'pierogi', 'kielbasa', 'bakery', 'roncesvalles'],
+    'little-malta': ['maltese', 'malta', 'pastizzi', 'junction'],
     'little-jamaica': ['jamaican', 'caribbean', 'jerk', 'reggae', 'patty'],
-    'little-ethiopia': ['ethiopian', 'injera', 'coffee', 'african'],
-    roncesvalles: ['polish', 'pierogi', 'kielbasa', 'bakery'],
+    'little-ukraine': ['ukrainian', 'ukraine', 'bloor west'],
+    chinatown: ['chinese', 'dim sum', 'dumpling', 'noodle', 'asian', 'bubble tea'],
+    koreatown: ['korean', 'bbq', 'karaoke', 'kpop', 'kimchi'],
+    greektown: ['greek', 'souvlaki', 'mediterranean', 'baklava', 'gyro', 'danforth'],
   };
   const hits = [];
   for (const [id, ws] of Object.entries(kw)) {
     if (ws.some((w) => ql.includes(w))) hits.push(NEIGHBOURHOODS.find((n) => n.id === id));
   }
   if (!hits.length) {
-    if (ql.match(/food|hungry|eat|lunch|dinner/)) hits.push(NEIGHBOURHOODS[0], NEIGHBOURHOODS[2], NEIGHBOURHOODS[3]);
-    else if (ql.match(/culture|explore|walk|vibe/)) hits.push(NEIGHBOURHOODS[2], NEIGHBOURHOODS[4], NEIGHBOURHOODS[6]);
-    else if (ql.match(/night|party|fun|drink|bar/)) hits.push(NEIGHBOURHOODS[0], NEIGHBOURHOODS[5], NEIGHBOURHOODS[7]);
-    else if (ql.match(/coffee|chill|relax|cozy/)) hits.push(NEIGHBOURHOODS[8], NEIGHBOURHOODS[0], NEIGHBOURHOODS[9]);
+    if (ql.match(/food|hungry|eat|lunch|dinner/)) hits.push(NEIGHBOURHOODS[0], NEIGHBOURHOODS[10], NEIGHBOURHOODS[2]);
+    else if (ql.match(/culture|explore|walk|vibe/)) hits.push(NEIGHBOURHOODS[0], NEIGHBOURHOODS[10], NEIGHBOURHOODS[8]);
+    else if (ql.match(/night|party|fun|drink|bar/)) hits.push(NEIGHBOURHOODS[0], NEIGHBOURHOODS[11], NEIGHBOURHOODS[1]);
+    else if (ql.match(/coffee|chill|relax|cozy/)) hits.push(NEIGHBOURHOODS[1], NEIGHBOURHOODS[0], NEIGHBOURHOODS[12]);
   }
   if (!hits.length) {
-    return "Great question! I'd suggest Chinatown for immersive food, or Little Italy for patios. Tell me more!";
+    return "Great question! I'd suggest starting at Kensington Market, or Chinatown for food. Tell me more!";
   }
   const uniq = [...new Set(hits.filter(Boolean))].slice(0, 3);
   return (

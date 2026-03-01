@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Tooltip, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -6,18 +6,30 @@ import { NEIGHBOURHOODS } from '../data/neighbourhoods';
 
 function MapContent() {
   const map = useMap();
+  const zoomRef = useRef(null);
   useEffect(() => {
-    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    if (zoomRef.current) return;
+    const ctrl = L.control.zoom({ position: 'bottomright' });
+    zoomRef.current = ctrl;
+    ctrl.addTo(map);
+    return () => {
+      if (zoomRef.current) {
+        map.removeControl(zoomRef.current);
+        zoomRef.current = null;
+      }
+    };
   }, [map]);
   return null;
 }
 
-function createFlagIcon(flag) {
+function createFlagIcon(flag, isKensington = false) {
+  const size = isKensington ? 22 : 30;
+  const box = isKensington ? 26 : 34;
   return L.divIcon({
     className: 'custom-marker',
-    html: `<div style="font-size:30px;cursor:pointer;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.4));transition:transform 0.2s;line-height:1;">${flag}</div>`,
-    iconSize: [34, 34],
-    iconAnchor: [17, 17],
+    html: `<div style="font-size:${size}px;cursor:pointer;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.4));transition:transform 0.2s;line-height:1;">${flag}</div>`,
+    iconSize: [box, box],
+    iconAnchor: [box / 2, box / 2],
   });
 }
 
@@ -40,13 +52,13 @@ export default function Map({ onSelect }) {
           <Marker
             key={n.id}
             position={[n.lat, n.lng]}
-            icon={createFlagIcon(n.flag)}
+            icon={createFlagIcon(n.flag, n.id === 'kensington')}
             eventHandlers={{
               click: () => onSelect(n.id),
             }}
           >
             <Tooltip direction="top" offset={[0, -14]} className="lt-tip" permanent={false}>
-              {n.name}
+              {n.id === 'kensington' ? 'Kensington Market' : n.name}
             </Tooltip>
           </Marker>
         ))}
