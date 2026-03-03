@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { NEIGHBOURHOODS } from '../data/neighbourhoods';
 
-const GEMINI_MODEL = 'gemini-1.5-flash';
+const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-1.5-flash';
 const GEMINI_URL = (key) =>
-  `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${key}`;
+  `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent?key=${key}`;
 
 function localRecommend(query) {
   const ql = query.toLowerCase();
@@ -42,8 +42,13 @@ function localRecommend(query) {
   );
 }
 
-const SYSTEM_PROMPT = `You are a friendly Toronto neighbourhood guide. Recommend 1-3 neighbourhoods from this list based on the user's mood, interests, culture, and location. Be concise, warm, 2 sentences per pick. Use exact names.
+const SYSTEM_PROMPT = `You are a friendly Toronto neighbourhood guide. Use ONLY the neighbourhoods from this list. Be conversational and warm.
 
+- If the user says hi, hello, or is just chatting: greet them back and invite them to tell you what they're in the mood for (food, culture, a walk) or where they are (e.g. "I'm near Spadina", "by Kensington").
+- If they mention a location (Spadina, Kensington, Danforth, Bloor, etc.): suggest 1–3 neighbourhoods from the list that are near or match that area. Spadina = Kensington Market, Chinatown. Danforth = Greektown. Bloor = Koreatown, Little Ukraine. etc.
+- If they mention mood, food, or interests: recommend 1–3 neighbourhoods from the list. Be concise, 1–2 sentences per pick. Use the exact names below.
+
+Neighbourhoods (use only these names):
 ${NEIGHBOURHOODS.map((n) => `${n.flag} ${n.name}: ${n.desc}`).join('\n')}`;
 
 function buildGeminiContents(msgs) {
@@ -83,8 +88,12 @@ export default function AIChat({ onClose, onNav }) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-            contents: buildGeminiContents(updated),
+            // Some Gemini REST variants reject `systemInstruction` on /v1.
+            // To keep compatibility, we prepend our system prompt as the first message.
+            contents: [
+              { role: 'user', parts: [{ text: SYSTEM_PROMPT }] },
+              ...buildGeminiContents(updated),
+            ],
             generationConfig: {
               maxOutputTokens: 512,
               temperature: 0.7,
@@ -93,11 +102,20 @@ export default function AIChat({ onClose, onNav }) {
         });
         const data = await res.json();
         const part = data?.candidates?.[0]?.content?.parts?.[0];
-        if (part?.text) reply = part.text.trim();
-        if (data?.error) console.warn('Gemini API error:', data.error);
+        if (part?.text) {
+          reply = part.text.trim();
+        } else if (data?.error) {
+          console.warn('Gemini API error:', data.error.message || data.error);
+        } else if (data?.candidates?.[0]?.finishReason === 'SAFETY') {
+          console.warn('Gemini blocked response (safety)');
+        } else {
+          console.warn('Gemini no text in response:', data);
+        }
       } catch (e) {
         console.warn('Gemini request failed', e);
       }
+    } else {
+      console.warn('No VITE_GEMINI_API_KEY — add it to .env and restart dev server');
     }
     if (!reply) reply = localRecommend(txt);
     setMsgs((p) => [...p, { role: 'assistant', text: reply }]);
