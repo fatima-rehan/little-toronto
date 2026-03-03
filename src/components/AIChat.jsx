@@ -32,7 +32,7 @@ function localRecommend(query) {
     else if (ql.match(/coffee|chill|relax|cozy/)) hits.push(NEIGHBOURHOODS[1], NEIGHBOURHOODS[0], NEIGHBOURHOODS[12]);
   }
   if (!hits.length) {
-    return "Great question! I'd suggest starting at Kensington Market, or Chinatown for food. Tell me more!";
+    return "Cool, I'd suggest starting at Kensington Market!";
   }
   const uniq = [...new Set(hits.filter(Boolean))].slice(0, 3);
   return (
@@ -58,12 +58,20 @@ function buildGeminiContents(msgs) {
   }));
 }
 
+function normalizeText(text) {
+  if (!text) return '';
+  // Strip simple Markdown bold/italic markers that look odd in plain chat.
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1');
+}
+
 export default function AIChat({ onClose, onNav }) {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
   const [msgs, setMsgs] = useState([
     {
       role: 'assistant',
-      text: "Hey! 👋 Tell me what you're looking for: food, culture, a walk — and I'll find your perfect neighbourhood!",
+      text: "Hi!! Tell me what you're looking for (food, culture, a walk), or where you are and I'll find your perfect neighbourhood!",
     },
   ]);
   const [inp, setInp] = useState('');
@@ -134,7 +142,7 @@ export default function AIChat({ onClose, onNav }) {
       <div className="ai-msgs" ref={scrollRef}>
         {msgs.map((m, i) => (
           <div key={i} className={`ai-msg ${m.role === 'user' ? 'u' : 'a'}`}>
-            {m.text}
+            {normalizeText(m.text)}
             {m.role === 'assistant' && mentioned(m.text).length > 0 && (
               <div style={{ marginTop: 6, display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                 {mentioned(m.text).map((n) => (
@@ -170,7 +178,7 @@ export default function AIChat({ onClose, onNav }) {
               send();
             }
           }}
-          placeholder="I'm craving spicy food..."
+          placeholder="I'm near Spadina and I want matcha..."
         />
         <button onClick={send} disabled={!inp.trim() || busy}>
           Send
