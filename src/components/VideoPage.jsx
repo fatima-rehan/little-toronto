@@ -46,8 +46,8 @@ export default function VideoPage({ id, onBack }) {
             ) : (
               <div className="vp-under-construction">
                 <span className="vp-uc-icon">🚧</span>
-                <p>Under construction</p>
-                <p className="vp-uc-desc">Video coming soon.</p>
+                <p>Under Construction...</p>
+                <p className="vp-uc-desc">Video coming soon!</p>
               </div>
             )}
           </div>

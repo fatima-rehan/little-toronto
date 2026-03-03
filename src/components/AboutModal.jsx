@@ -19,7 +19,10 @@ export default function AboutModal({ onClose }) {
         <p>
           Not sure where to start? Use the <strong>AI Guide</strong>! Tell it
           what you're in the mood for or where you're located, and it'll recommend the perfect
-          neighbourhood.
+          neighbourhood to explore.
+        </p>
+        <p>
+          Created by Fatima Rehan
         </p>
       </div>
     </div>

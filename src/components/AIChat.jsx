@@ -10,14 +10,14 @@ function localRecommend(query) {
   const kw = {
     kensington: ['kensington', 'market', 'vintage', 'bodega', 'start', 'streetcar'],
     'little-italy': ['italian', 'pasta', 'pizza', 'gelato', 'espresso', 'cafe', 'patio', 'wine'],
-    'little-india': ['indian', 'curry', 'spicy', 'bollywood', 'samosa', 'biryani'],
+    'little-india': ['indian', 'streetfood', 'spicy', 'bollywood', 'samosa', 'biryani'],
     'little-tokyo': ['japanese', 'ramen', 'sushi', 'anime', 'japan', 'izakaya', 'matcha'],
     'little-portugal': ['portuguese', 'pastry', 'nata', 'sardine', 'mural'],
     'little-poland': ['polish', 'pierogi', 'kielbasa', 'bakery', 'roncesvalles'],
     'little-malta': ['maltese', 'malta', 'pastizzi', 'junction'],
     'little-jamaica': ['jamaican', 'caribbean', 'jerk', 'reggae', 'patty'],
     'little-ukraine': ['ukrainian', 'ukraine', 'bloor west'],
-    chinatown: ['chinese', 'dim sum', 'dumpling', 'noodle', 'asian', 'bubble tea'],
+    chinatown: ['chinese', 'hotpot', 'dumpling', 'noodle', 'asian', 'bubble tea'],
     koreatown: ['korean', 'bbq', 'karaoke', 'kpop', 'kimchi'],
     greektown: ['greek', 'souvlaki', 'mediterranean', 'baklava', 'gyro', 'danforth'],
   };
@@ -110,7 +110,7 @@ export default function AIChat({ onClose, onNav }) {
   return (
     <div className="ai-chat">
       <div className="ai-head">
-        <span>🗼 AI Neighbourhood Guide (Gemini)</span>
+        <span>🗼 AI Neighbourhood Guide</span>
         <button onClick={onClose}>✕</button>
       </div>
       <div className="ai-msgs" ref={scrollRef}>
