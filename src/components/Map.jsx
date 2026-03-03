@@ -48,7 +48,7 @@ function createUserIcon() {
       width:${box}px;
       height:${box}px;
       border-radius:50%;
-      background:rgba(52, 152, 219,0.25);
+      background:rgba(192, 57, 43, 0.18);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -57,8 +57,8 @@ function createUserIcon() {
         width:${size / 1.8}px;
         height:${size / 1.8}px;
         border-radius:50%;
-        background:#3498db;
-        box-shadow:0 0 0 2px #fff;
+        background:#C0392B;
+        box-shadow:0 0 0 2px #FFF8F0;
       "></div>
     </div>`,
     iconSize: [box, box],
